@@ -45,9 +45,6 @@
                                     <li class="nav-item">
                                         <a href="{{ route("public.home") }}">Home</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route("public.team") }}">Team</a>
-                                    </li>
                                     
                                     <li class="nav-item">
                                         <a href="{{ route("public.search") }}">Billboards</a>

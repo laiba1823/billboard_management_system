@@ -2,6 +2,9 @@
 
 @section('title', 'Profile | Buyer')
 
+@php
+    $bankAccount = $bankAccount ?? null;
+@endphp
 @section('content')
     <style>
         .space-upNdown{
@@ -84,7 +87,7 @@
                             <div class="card__body">
                                 
                                 <div class="customer-profile__avatar" style="overflow: hidden">
-                                    <img src="{{ asset($buyer->img ) }}" alt="" style="border-radius: 10px;height: -webkit-fill-available;">
+                                    <img src="{{ asset($buyer->img ?? 'img/default.png') }}" alt="" style="border-radius: 10px;height: -webkit-fill-available;">
                                     {{-- <svg viewBox="0 0 252 272" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <g filter="url(#filter0_dd)">
@@ -94,7 +97,7 @@
                                         </g>
                                         <g filter="url(#filter1_dd)">
                                             <path
-                                                d="M18.235 43.2287C19.2494 23.1848 35.1848 7.24941 55.2287 6.23501C76.8855 5.13899 104.551 4 126 4C147.449 4 175.114 5.13898 196.771 6.23501C216.815 7.24941 232.751 23.1848 233.765 43.2287C234.861 64.8855 236 92.5512 236 114C236 135.449 234.861 163.114 233.765 184.771C232.751 204.815 216.815 220.751 196.771 221.765C175.114 222.861 147.449 224 126 224C104.551 224 76.8855 222.861 55.2287 221.765C35.1848 220.751 19.2494 204.815 18.235 184.771C17.139 163.114 16 135.449 16 114C16 92.5512 17.139 64.8855 18.235 43.2287Z"
+                                                d="M18.235 43.2287C19.2494 23.1848 35.1848 7.24941 55.2287 6.23501C76.8855 5.13899 104.551 4 126 4C147.449 4 175.114 5.13898 196.771 6.23501C216.815 7.24941 232.751 23.1848 233.765 43.2287C234.861 64.8855 236 92.5512 236 114C236 135.449 234.861 163.114 233.765 184.77１C２３２．７５１　２０４．８１５　２１６．８１５　２２０．７５１　１９６．７７１　２２１．７６５Ｃ１７５．１１４　２２２．８６１　１４７．４４９　２２４　１２６　２２４Ｃ１０４．５５１　２２４　７６．８８５５　２２２．８６１　５５．２２８７　２２１．７６５Ｃ３５．１８４８　２２０．７５１　１９．２４９４　２０４．８１５　１８．２３５　１８４．７７１Ｃ１７．１３９　１６３．１１４　１６　１３５．４４９　１６　１₁４Ｃ₁６　９₂．₅₅₁₂　₁₇．₁₃₉　₆₄．₈₈₅₅　₁₈．₂₃₅　₄₃．₂₂₈₇Z"
                                                 fill="url(#pattern0)"></path>
                                         </g>
                                         <defs>
@@ -197,9 +200,9 @@
                                             src="{{ asset('img/content/credit-card%403x.png') }}" alt="#">
                                         <div class="credit-card__content">
                                             <input class="credit-card__number" type="text"
-                                                value="{{ $bankAccount->card_number }}" readonly="readonly">
-                                            <div class="credit-card__name">{{ $bankAccount->card_holder }}</div>
-                                            <div class="credit-card__date">{{ $bankAccount->card_expiry }}</div>
+                                                value="{{ optional($bankAccount)->card_number ?? '-' }}" readonly="readonly">
+                                            <div class="credit-card__name">{{ $bankAccount->card_holder ?? '-' }}</div>
+                                            <div class="credit-card__date">{{ $bankAccount->card_expiry ?? '-' }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -211,19 +214,19 @@
 
                                             <li class="card-list__item">
                                                 <div class="card-list__title">Card Holder</div>
-                                                <div class="card-list__value">{{ $bankAccount->card_holder }}</div>
+                                                <div class="card-list__value">{{ optional($bankAccount)->card_holder ?? '-' }}</div>
                                             </li>
                                             <li class="card-list__item">
                                                 <div class="card-list__title">Expire</div>
-                                                <div class="card-list__value">{{ $bankAccount->card_expiry }}</div>
+                                                <div class="card-list__value">{{ optional($bankAccount)->card_expiry ?? '-' }}</div>
                                             </li>
                                             <li class="card-list__item">
                                                 <div class="card-list__title">Card Number</div>
-                                                <div class="card-list__value">{{ $bankAccount->card_number }}</div>
+                                                <div class="card-list__value">{{ optional($bankAccount)->card_number ?? '-' ?? '-' }}</div>
                                             </li>
                                             <li class="card-list__item">
                                                 <div class="card-list__title">Account Number</div>
-                                                <div class="card-list__value">{{ $bankAccount->account_number }}</div>
+                                                <div class="card-list__value">{{ optional($bankAccount)->account_number ?? '-' ?? '-' }}</div>
                                             </li>
                                         </ul>
                                     </div>
@@ -297,12 +300,22 @@
                                                                         <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape"></feBlend>
                                                                     </filter>
                                                                     <pattern id="pattern1" patternContentUnits="objectBoundingBox" width="1" height="1">
-                                                                        <use xlink:href="#profileImageAddPlaceholder" transform="scale(0.00142857)"></use>
-                                                                        <use xlink:href="#profileImageAdd" transform="scale(0.00142857)"></use>
-                                                                    </pattern>
-                                                                    {{-- <image id="profileImageAddPlaceholder" width="700" height="700" xlink:href="  {{ asset("img/content/upload-placeholder.svg") }}"></image> --}}
-                                                                    <image id="profileImageAddPlaceholder" width="700" height="700" xlink:href=" {{ Storage::url($buyer->img) }}"></image>
-                                                                    <image id="profileImageAdd" class="profile-upload__image" width="700" height="700" xlink:href="{{ Storage::url($buyer->img ) }}"></image>
+    <use xlink:href="#profileImageAddPlaceholder" transform="scale(0.00142857)"></use>
+    <use xlink:href="#profileImageAdd" transform="scale(0.00142857)"></use>
+</pattern>
+
+<image id="profileImageAddPlaceholder"
+       width="700"
+       height="700"
+       xlink:href="{{ $buyer->img ? Storage::url($buyer->img) : asset('img/default.png') }}">
+</image>
+
+<image id="profileImageAdd"
+       class="profile-upload__image"
+       width="700"
+       height="700"
+       xlink:href="{{ $buyer->img ? Storage::url($buyer->img) : asset('img/default.png') }}">
+</image>
                                                                 </defs>
                                                             </svg>
                                                             <div class="profile-upload__label">
@@ -396,28 +409,28 @@
                                                             <span class="input-group__append">
                                                                 <img class="add-card__input-number-logo" src="{{asset("img/content/visa-logo.png") }}" alt="#">
                                                             </span>
-                                                            <input class="input js-card-number" type="text" value="{{ $bankAccount->card_number }}" placeholder="**** **** **** 1234" name="card_number" required>
+                                                            <input class="input js-card-number" type="text" value="{{ optional($bankAccount)->card_number ?? '' }}" placeholder="**** **** **** 1234" name="card_number" required>
                                                         </div>
 
                                                         <div class="space-upNdown  input-group input-group--white input-group--prepend">
                                                             <div class="input-group__prepend">
                                                                 <i class="fa-solid fa-credit-card"></i>
                                                             </div>
-                                                            <input class="input" type="text" placeholder="Expiry" value="{{ $bankAccount->card_expiry }}" name="card_expiry" id="cardExpiry" required>
+                                                            <input class="input" type="text" placeholder="Expiry" value="{{ optional($bankAccount)->card_expiry ?? '' }}" name="card_expiry" id="cardExpiry" required>
                                                         </div>
 
                                                         <div class="space-upNdown  input-group input-group--white input-group--prepend">
                                                             <div class="input-group__prepend">
                                                                 <i class="fa-solid fa-user"></i>
                                                             </div>
-                                                            <input class="input" type="text" placeholder="Card Holder" value="{{ $bankAccount->card_holder }}" name="card_holder" required>
+                                                            <input class="input" type="text" placeholder="Card Holder" value="{{ optional($bankAccount)->card_holder ?? '' }}" name="card_holder" required>
                                                         </div>
                                                         
                                                         <div class="space-upNdown  input-group input-group--white input-group--prepend">
                                                             <div class="input-group__prepend">
                                                                 <i class="fa-solid fa-file-invoice-dollar"></i>
                                                             </div>
-                                                            <input class="input" type="numeric" placeholder="Account Number" value="{{ $bankAccount->account_number }}" name="account_number" maxlength="10" required>
+                                                            <input class="input" type="numeric" placeholder="Account Number" value="{{ optional($bankAccount)->account_number ?? '' }}" name="account_number" maxlength="10" required>
                                                         </div>
 
                                                         {{-- <div class=" space-upNdown input-group input-group--white input-group--prepend">

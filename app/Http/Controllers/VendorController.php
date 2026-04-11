@@ -38,23 +38,26 @@ class VendorController extends Controller
     public function create(){
         return view('vendor.register');
     }
-
+     /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request){
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:vendors',
-            'password' => 'required|string|min:8',
-        ]);
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:vendors',
+        'password' => 'required|string|min:8',
+    ]);
 
-        Vendor::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'img' => '/img/profile-pictures/default.svg',
-            'password' => Hash::make($request->password),
-        ]);
+    Vendor::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'img' => '/img/profile-pictures/default.svg',
+        'password' => Hash::make($request->password),
+    ]);
 
-        return redirect()->route('verification.notice');
-    }
+    return redirect()->route('vendors.loginForm')
+        ->with('success', 'Account successfully registered! Please login.');
+}
 
     public function loginForm(){
         return view('vendor.login');

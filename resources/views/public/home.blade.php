@@ -54,14 +54,6 @@
 								</div>
 							</fieldset>
 						</form>
-						<div class="wt-videoholder">
-							<div class="wt-videoshow">
-								<a data-rel="prettyPhoto[video]" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><i class="fa fa-play"></i></a>
-							</div>
-							<div class="wt-videocontent">
-								<span>See For Yourself!<em>How it works </em></span>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -79,8 +71,8 @@
 						<div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
 							<div class="wt-sectionhead wt-textcenter">
 								<div class="wt-sectiontitle">
-									<h2>Explore Locations</h2>
-									<span>Billboards by Location</span>
+									<h2>Explore Categories</h2>
+                                    <span>Billboards by Category</span>
 								</div>
 							</div>
 						</div>
@@ -93,7 +85,7 @@
 									</figure>
 									<div class="wt-cattitle">
 										<h3>
-											<a href="{{ route('public.search', ['category' => $categories[1]['id']]) }} ">{{ $categories[9]['name'] }}</a>
+											<a href="{{ route('public.search', ['category' => $categories[1]['id']]) }} ">{{ $categories[0]['name'] }}</a>
 										</h3>
 									</div>
 									<div class="wt-categoryslidup">

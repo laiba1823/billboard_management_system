@@ -33,23 +33,24 @@ class BuyerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:buyers',
-            'password' => 'required|string|min:8',
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:buyers',
+        'password' => 'required|string|min:8',
+    ]);
 
-        Buyer::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'img' => '/img/profile-pictures/default.svg',
-            'password' => Hash::make($request->password),
-        ]);
+    Buyer::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'img' => '/img/profile-pictures/default.svg',
+        'password' => Hash::make($request->password),
+    ]);
 
-        return redirect()->route('verification.notice'); 
-    }
+    return redirect()->route('buyers.loginForm')
+        ->with('success', 'Account successfully registered! Please login.');
+}
 
     /**
      * Show the login form
