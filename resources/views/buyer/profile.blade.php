@@ -87,7 +87,7 @@
                             <div class="card__body">
                                 
                                 <div class="customer-profile__avatar" style="overflow: hidden">
-                                    <img src="{{ asset($buyer->img ?? 'img/default.png') }}" alt="" style="border-radius: 10px;height: -webkit-fill-available;">
+                                    <img src="{{ asset($buyer->img ?? 'img/profile-pictures/default.svg') }}" alt="" style="border-radius: 10px;height: -webkit-fill-available;">
                                     {{-- <svg viewBox="0 0 252 272" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <g filter="url(#filter0_dd)">
@@ -307,14 +307,14 @@
 <image id="profileImageAddPlaceholder"
        width="700"
        height="700"
-       xlink:href="{{ $buyer->img ? Storage::url($buyer->img) : asset('img/default.png') }}">
+       xlink:href="{{ $buyer->img ? asset($buyer->img) : asset('img/profile-pictures/default.svg') }}">
 </image>
 
 <image id="profileImageAdd"
        class="profile-upload__image"
        width="700"
        height="700"
-       xlink:href="{{ $buyer->img ? Storage::url($buyer->img) : asset('img/default.png') }}">
+       xlink:href="{{ $buyer->img ? asset($buyer->img) : asset('img/profile-pictures/default.svg') }}">
 </image>
                                                                 </defs>
                                                             </svg>

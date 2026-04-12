@@ -78,113 +78,25 @@
 						</div>
 						<div class="wt-categoryexpl">
 
+							@php
+							$images = ['img-01.png', 'img-08.png', 'img-02.png', 'img-03.png', 'img-04.png', 'img-05.png', 'img-06.png', 'img-07.png', 'img-09.png'];
+							@endphp
+							@foreach($categories as $index => $category)
+							@if(isset($images[$index]))
 							<div class="col-12 col-sm-12 col-md-3 col-lg-3 float-left">
 								<div class="wt-categorycontent">
-									<figure>
-										<img src="images/categories/img-01.png" alt="image description">
-									</figure>
+									<figure><img src="images/categories/{{ $images[$index] }}" alt="image description"></figure>
 									<div class="wt-cattitle">
-										<h3>
-											<a href="{{ route('public.search', ['category' => $categories[1]['id']]) }} ">{{ $categories[0]['name'] }}</a>
-										</h3>
+										<h3><a href="{{ route('public.search', ['category' => $category['id']]) }}">{{ $category['name'] }}</a></h3>
 									</div>
 									<div class="wt-categoryslidup">
-										<p>{{ $categories[1]['description'] }}</p>
-										<a href="{{ route('public.search', ['category' => $categories[1]['id']]) }}">Explore <i class="fa fa-arrow-right"></i></a>
+										<p>{{ $category['description'] }}</p>
+										<a href="{{ route('public.search', ['category' => $category['id']]) }}">Explore <i class="fa fa-arrow-right"></i></a>
 									</div>
 								</div>
 							</div>
-
-							<div class="col-12 col-sm-12 col-md-3 col-lg-3 float-left">
-								<div class="wt-categorycontent">
-									<figure><img src="images/categories/img-08.png" alt="image description"></figure>
-									<div class="wt-cattitle">
-										<h3><a href="{{ route('public.search', ['category' => $categories[2]['id']]) }}">{{ $categories[2]['name'] }}</a></h3>
-									</div>
-									<div class="wt-categoryslidup">
-										<p>{{ $categories[2]['description'] }}</p>
-										<a href="{{ route('public.search', ['category' => $categories[2]['id']]) }}">Explore <i class="fa fa-arrow-right"></i></a>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-12 col-sm-12 col-md-3 col-lg-3 float-left">
-								<div class="wt-categorycontent">
-									<figure><img src="images/categories/img-02.png" alt="image description"></figure>
-									<div class="wt-cattitle">
-										<h3><a href="{{ route('public.search', ['category' => $categories[3]['id']]) }}">{{ $categories[3]['name'] }}</a></h3>
-									</div>
-									<div class="wt-categoryslidup">
-										<p>{{ $categories[3]['description'] }}</p>
-										<a href="{{ route('public.search', ['category' => $categories[3]['id']]) }}">Explore <i class="fa fa-arrow-right"></i></a>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-12 col-sm-12 col-md-3 col-lg-3 float-left">
-								<div class="wt-categorycontent">
-									<figure><img src="images/categories/img-03.png" alt="image description"></figure>
-									<div class="wt-cattitle">
-										<h3><a href="{{ route('public.search', ['category' => $categories[4]['id']]) }}">{{ $categories[4]['name'] }}</a></h3>
-									</div>
-									<div class="wt-categoryslidup">
-										<p>{{ $categories[4]['description'] }}</p>
-										<a href="{{ route('public.search', ['category' => $categories[4]['id']]) }}">Explore <i class="fa fa-arrow-right"></i></a>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-12 col-sm-12 col-md-3 col-lg-3 float-left">
-								<div class="wt-categorycontent">
-									<figure><img src="images/categories/img-04.png" alt="image description"></figure>
-									<div class="wt-cattitle">
-										<h3><a href="{{ route('public.search', ['category' => $categories[5]['id']]) }}">{{ $categories[5]['name'] }}</a></h3>
-									</div>
-									<div class="wt-categoryslidup">
-										<p>{{ $categories[5]['description'] }}</p>
-										<a href="{{ route('public.search', ['category' => $categories[5]['id']]) }}">Explore <i class="fa fa-arrow-right"></i></a>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-12 col-sm-12 col-md-3 col-lg-3 float-left">
-								<div class="wt-categorycontent">
-									<figure><img src="images/categories/img-05.png" alt="image description"></figure>
-									<div class="wt-cattitle">
-										<h3><a href="{{ route('public.search', ['category' => $categories[6]['id']]) }}">{{ $categories[6]['name'] }}</a></h3>
-									</div>
-									<div class="wt-categoryslidup">
-										<p>{{ $categories[6]['description'] }}</p>
-										<a href="{{ route('public.search', ['category' => $categories[6]['id']]) }}">Explore <i class="fa fa-arrow-right"></i></a>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-12 col-sm-12 col-md-3 col-lg-3 float-left">
-								<div class="wt-categorycontent">
-									<figure><img src="images/categories/img-06.png" alt="image description"></figure>
-									<div class="wt-cattitle">
-										<h3><a href="{{ route('public.search', ['category' => $categories[7]['id']]) }}">{{ $categories[7]['name'] }}</a></h3>
-									</div>
-									<div class="wt-categoryslidup">
-										<p>{{ $categories[7]['description'] }}</p>
-										<a href="{{ route('public.search', ['category' => $categories[7]['id']]) }}">Explore <i class="fa fa-arrow-right"></i></a>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-12 col-sm-12 col-md-3 col-lg-3 float-left">
-								<div class="wt-categorycontent">
-									<figure><img src="images/categories/img-07.png" alt="image description"></figure>
-									<div class="wt-cattitle">
-										<h3><a href="{{ route('public.search', ['category' => $categories[8]['id']]) }}">{{ $categories[8]['name'] }}</a></h3>
-									</div>
-									<div class="wt-categoryslidup">
-										<p>{{ $categories[8]['description'] }}</p>
-										<a href="{{ route('public.search', ['category' => $categories[8]['id']]) }}">Explore <i class="fa fa-arrow-right"></i></a>
-									</div>
-								</div>
-							</div>
+							@endif
+							@endforeach
 
 							<div class="col-12 col-sm-12 col-md-12 col-lg-12 float-left">
 								{{-- <div class="wt-btnarea">

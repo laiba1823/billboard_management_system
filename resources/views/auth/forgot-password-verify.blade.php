@@ -14,7 +14,7 @@
             justify-content:center;
             align-items:center;
 
-            background: url('{{ asset("images/bg/billboard-bg.jpg") }}') no-repeat center center fixed;
+            background: url('{{ asset("images/bannerimg/banner-img.jpg") }}') no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -92,7 +92,7 @@
     @if(session('fail'))
         <div class="error">{{ session('fail') }}</div>
     @endif
-<form method="POST" action="{{ route('forgot.password.verify.post') }}">
+<form method="POST" action="{{ route('forgot.password.verify.submit') }}">
     @csrf
 
     <input type="text" name="otp" placeholder="Enter OTP" required>

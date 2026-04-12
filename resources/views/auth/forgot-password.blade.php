@@ -14,7 +14,7 @@
             justify-content:center;
             align-items:center;
 
-            background: url('{{ asset("images/bg/billboard-bg.jpg") }}') no-repeat center center fixed;
+            background: url('{{ asset("images/bannerimg/banner-img.jpg") }}') no-repeat center center fixed;
             background-size: cover;
         }
 

@@ -23,6 +23,11 @@ class AuthCheckBuyer
         // Passing down users data for the template
         $id = session("LoggedBuyer");
         $request->buyer = Buyer::where("id", "=", $id)->first();
+
+        if (!$request->buyer) {
+            session()->forget("LoggedBuyer");
+            return redirect(route("buyers.loginForm"))->with("fail", "Buyer not found");
+        }
         
         return $next($request);
     }

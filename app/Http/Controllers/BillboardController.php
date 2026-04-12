@@ -15,8 +15,11 @@ use function Laravel\Prompts\error;
 class BillboardController extends Controller
 {
     public function billboardsDashboard(Request $request){
-        $vendor = Vendor::find($request->vendor->id);
-        $billboards = Billboard::where("vendor_id", "=", $request->vendor->id)->get()->sortByDesc('created_at');
+        if (!session('LoggedVendor')) {
+            return redirect()->route('vendors.loginForm');
+        }
+        $vendor = Vendor::find(session('LoggedVendor'));
+        $billboards = Billboard::where("vendor_id", "=", session('LoggedVendor'))->get()->sortByDesc('created_at');
 
         return view("vendor.billboards.dashboard", [
             "vendor" => $vendor,
@@ -25,7 +28,10 @@ class BillboardController extends Controller
     }
 
     public function create(Request $request){
-        $vendor = Vendor::find($request->vendor->id);
+        if (!session('LoggedVendor')) {
+            return redirect()->route('vendors.loginForm');
+        }
+        $vendor = Vendor::find(session('LoggedVendor'));
         $categories = Category::all()->toArray();
         return view("vendor.billboards.create", [
             "vendor" => $vendor,
@@ -78,9 +84,12 @@ class BillboardController extends Controller
     }
 
     public function edit($id, Request $request){
+        if (!session('LoggedVendor')) {
+            return redirect()->route('vendors.loginForm');
+        }
         $billboard = Billboard::findOrFail($id);
         $categories = Category::all()->toArray();
-        $vendor = Vendor::find($request->vendor->id);
+        $vendor = Vendor::find(session('LoggedVendor'));
         return view('vendor.billboards.edit', compact('billboard', 'categories', 'vendor'));
     }
 

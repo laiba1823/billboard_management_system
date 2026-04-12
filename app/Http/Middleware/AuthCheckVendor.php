@@ -23,6 +23,11 @@ class AuthCheckVendor
         // Passing down users data for the template
         $id = session("LoggedVendor");
         $request->vendor = Vendor::where("id", "=", $id)->first();
+
+        if (!$request->vendor) {
+            session()->forget("LoggedVendor");
+            return redirect(route("vendors.loginForm"))->with("fail", "Vendor not found");
+        }
         
         return $next($request);
     }

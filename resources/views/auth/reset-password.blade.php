@@ -13,16 +13,26 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #f4f6f9;
+
+            background: url('{{ asset("images/bannerimg/banner-img.jpg") }}') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
         }
 
         .card {
-            background: #fff;
+            position: relative;
+            background: rgba(255,255,255,0.95);
             padding: 40px;
             width: 420px;
             border-radius: 12px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             border-top: 4px solid #2f80ed;
+            z-index: 2;
         }
 
         h2 {
@@ -67,6 +77,8 @@
 </head>
 
 <body>
+
+<div class="overlay"></div>
 
 <div class="card">
 

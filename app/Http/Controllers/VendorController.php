@@ -18,7 +18,10 @@ class VendorController extends Controller
 {
 
     public function dashboard(Request $request){
-        $vendor = Vendor::find($request->vendor->id);
+        if (!session('LoggedVendor')) {
+            return redirect()->route('vendors.loginForm');
+        }
+        $vendor = Vendor::find(session('LoggedVendor'));
         $bankAccount = BankAccounts::where('user_type', 'vendor')->where('user_id', $vendor->id)->first();
         $currentAmount = $bankAccount ? $bankAccount->current_balance : 0;
 
@@ -51,7 +54,7 @@ class VendorController extends Controller
     Vendor::create([
         'name' => $request->name,
         'email' => $request->email,
-        'img' => '/img/profile-pictures/default.svg',
+        'img' => 'img/profile-pictures/default.svg',
         'password' => Hash::make($request->password),
     ]);
 
@@ -96,7 +99,10 @@ class VendorController extends Controller
     }
 
     function financesDashboard(Request $request) {
-        $vendor = Vendor::find($request->vendor->id);
+        if (!session('LoggedVendor')) {
+            return redirect()->route('vendors.loginForm');
+        }
+        $vendor = Vendor::find(session('LoggedVendor'));
 
         // Retrieve bank account current balance (assuming there's only one bank account for the freelancer)
         $bankAccount = BankAccounts::where('user_type', 'vendor')->where('user_id', $vendor->id)->first();
@@ -116,7 +122,10 @@ class VendorController extends Controller
     }
 
     function withdrawPage(Request $request) {
-        $vendor = Vendor::find($request->vendor->id);
+        if (!session('LoggedVendor')) {
+            return redirect()->route('vendors.loginForm');
+        }
+        $vendor = Vendor::find(session('LoggedVendor'));
         $bankAccount = BankAccounts::where('user_type', 'vendor')->where('user_id', $vendor->id)->first();
         $currentAmount = $bankAccount ? $bankAccount->current_balance : 0;
 
@@ -128,7 +137,10 @@ class VendorController extends Controller
     }
     
     public function withdrawCash(Request $request){
-        $vendor = Vendor::find($request->vendor->id); // Assuming the freelancer is authenticated
+        if (!session('LoggedVendor')) {
+            return redirect()->route('vendors.loginForm');
+        }
+        $vendor = Vendor::find(session('LoggedVendor')); // Assuming the freelancer is authenticated
         $amount = $request->input('amount');
 
         // Validate the amount (add more validation as needed)
@@ -166,8 +178,11 @@ class VendorController extends Controller
     }
 
     function profilePage(Request $request) {
-        $vendor = Vendor::find($request->vendor->id);
-        $bankAccount = BankAccounts::where("user_type", "vendor")->where("user_id", $request->vendor->id)->first();
+        if (!session('LoggedVendor')) {
+            return redirect()->route('vendors.loginForm');
+        }
+        $vendor = Vendor::find(session('LoggedVendor'));
+        $bankAccount = BankAccounts::where("user_type", "vendor")->where("user_id", session('LoggedVendor'))->first();
         return view("vendor.profile", [
             "vendor" => $vendor,
             "bankAccount" => $bankAccount
@@ -185,8 +200,8 @@ class VendorController extends Controller
         ]);
 
         // Delete old profile image if it exists and not named "default.svg"
-        if ($vendor->image && $vendor->image !== '/img/profile-pictures/default.svg') {
-            Storage::disk('profile-pictures')->delete($vendor->image);
+        if ($vendor->img && $vendor->img !== 'img/profile-pictures/default.svg' && file_exists(public_path($vendor->img))) {
+            unlink(public_path($vendor->img));
         }
 
         // Update name and email
@@ -198,10 +213,10 @@ class VendorController extends Controller
         // Update profile image
         if ($request->hasFile('img')) {
             $imageName = time() . '_' . $request->file('img')->getClientOriginalName();
-            $path = $request->file('img')->storeAs('img/profile-pictures/', $imageName, 'public');
+            $request->file('img')->move(public_path('img/profile-pictures'), $imageName);
 
             $vendor->update([
-                'img' => 'storage/img/profile-pictures/' . $imageName,
+                'img' => 'img/profile-pictures/' . $imageName,
             ]);
         }
 

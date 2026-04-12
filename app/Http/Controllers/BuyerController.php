@@ -44,7 +44,7 @@ class BuyerController extends Controller
     Buyer::create([
         'name' => $request->name,
         'email' => $request->email,
-        'img' => '/img/profile-pictures/default.svg',
+        'img' => 'img/profile-pictures/default.svg',
         'password' => Hash::make($request->password),
     ]);
 
@@ -91,7 +91,10 @@ class BuyerController extends Controller
      * Display a listing of the resource.
      */
     public function dashboard(Request $request){
-        $buyer = Buyer::find($request->buyer->id);
+        if (!session('LoggedBuyer')) {
+            return redirect()->route('buyers.loginForm');
+        }
+        $buyer = Buyer::find(session('LoggedBuyer'));
         $bankAccount = BankAccounts::where('user_type', 'buyer')->where('user_id', $buyer->id)->first();
         $currentAmount = $bankAccount ? $bankAccount->current_balance : 0;
 
@@ -137,8 +140,11 @@ class BuyerController extends Controller
     }
 
     function profilePage(Request $request) {
-        $buyer = Buyer::find($request->buyer->id);
-        $bankAccount = BankAccounts::where("user_type", "buyer")->where("user_id", $request->buyer->id)->first();
+        if (!session('LoggedBuyer')) {
+            return redirect()->route('buyers.loginForm');
+        }
+        $buyer = Buyer::find(session('LoggedBuyer'));
+        $bankAccount = BankAccounts::where("user_type", "buyer")->where("user_id", session('LoggedBuyer'))->first();
         return view("buyer.profile", [
             "buyer" => $buyer,
             "bankAccount" => $bankAccount
@@ -156,8 +162,8 @@ class BuyerController extends Controller
         ]);
 
         // Delete old profile image if it exists and not named "default.svg"
-        if ($buyer->image && $buyer->image !== '/img/profile-pictures/default.svg') {
-            Storage::disk('profile-pictures')->delete($buyer->image);
+        if ($buyer->img && $buyer->img !== 'img/profile-pictures/default.svg' && file_exists(public_path($buyer->img))) {
+            unlink(public_path($buyer->img));
         }
 
         // Update name and email
@@ -169,7 +175,7 @@ class BuyerController extends Controller
         // Update profile image
         if ($request->hasFile('img')) {
             $imageName = time() . '_' . $request->file('img')->getClientOriginalName();
-            $path = $request->file('img')->storeAs('img/profile-pictures/', $imageName, 'public');
+            $request->file('img')->move(public_path('img/profile-pictures'), $imageName);
 
             $buyer->update([
                 'img' => 'img/profile-pictures/' . $imageName,
@@ -194,7 +200,10 @@ class BuyerController extends Controller
     }
 
     function financesDashboard(Request $request) {
-        $buyer = Buyer::find($request->buyer->id);
+        if (!session('LoggedBuyer')) {
+            return redirect()->route('buyers.loginForm');
+        }
+        $buyer = Buyer::find(session('LoggedBuyer'));
         // Retrieve bank account current balance (assuming there's only one bank account for the admin)
         $bankAccount = BankAccounts::where('user_type', 'buyer')->where('user_id', $buyer->id)->first();
         $currentBalance = $bankAccount ? $bankAccount->current_balance : 0;
@@ -215,9 +224,12 @@ class BuyerController extends Controller
     }
 
     function depositPage(Request $request) {
-        $buyer = Buyer::find($request->buyer->id);
+        if (!session('LoggedBuyer')) {
+            return redirect()->route('buyers.loginForm');
+        }
+        $buyer = Buyer::find(session('LoggedBuyer'));
 
-        $buyer = Buyer::find($request->buyer->id);
+        $buyer = Buyer::find(session('LoggedBuyer'));
         $bankAccount = BankAccounts::where('user_type', 'buyer')->where('user_id', $buyer->id)->first();
 
         return view("buyer.finances.deposit", [
@@ -227,7 +239,10 @@ class BuyerController extends Controller
     }
     
     public function depositCash(Request $request){
-        $buyer = Buyer::find($request->buyer->id); // Assuming the admin is authenticated
+        if (!session('LoggedBuyer')) {
+            return redirect()->route('buyers.loginForm');
+        }
+        $buyer = Buyer::find(session('LoggedBuyer')); // Assuming the admin is authenticated
         $amount = $request->input('amount');
 
         // Validate the amount (add more validation as needed)
@@ -253,7 +268,10 @@ class BuyerController extends Controller
     }
     
     function withdrawPage(Request $request) {
-        $buyer = Buyer::find($request->buyer->id);
+        if (!session('LoggedBuyer')) {
+            return redirect()->route('buyers.loginForm');
+        }
+        $buyer = Buyer::find(session('LoggedBuyer'));
         $bankAccount = BankAccounts::where('user_type', 'buyer')->where('user_id', $buyer->id)->first();
         $currentAmount = $bankAccount ? $bankAccount->current_balance : 0;
 
@@ -265,7 +283,10 @@ class BuyerController extends Controller
     }
     
     public function withdrawCash(Request $request){
-        $buyer = Buyer::find($request->buyer->id); // Assuming the admin is authenticated
+        if (!session('LoggedBuyer')) {
+            return redirect()->route('buyers.loginForm');
+        }
+        $buyer = Buyer::find(session('LoggedBuyer')); // Assuming the admin is authenticated
         $amount = $request->input('amount');
 
         // Validate the amount (add more validation as needed)

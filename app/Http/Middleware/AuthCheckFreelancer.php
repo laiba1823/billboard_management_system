@@ -24,6 +24,11 @@ class AuthCheckFreelancer
         $id = session("LoggedFreelancer");
         $request->freelancer = Freelancer::where("id", "=", $id)->first();
 
+        if (!$request->freelancer) {
+            session()->forget("LoggedFreelancer");
+            return redirect(route("freelancers.loginForm"))->with("fail", "Freelancer not found");
+        }
+
         return $next($request);
     }
 }

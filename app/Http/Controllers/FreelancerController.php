@@ -20,7 +20,7 @@ class FreelancerController extends Controller
         Freelancer::create([
             'name' => $request->name,
             'email' => $request->email,
-            'img' => '/img/profile-pictures/default.svg',
+            'img' => 'img/profile-pictures/default.svg',
             'password' => Hash::make($request->password),
         ]);
 
@@ -49,7 +49,10 @@ class FreelancerController extends Controller
 
     public function dashboard(Request $request)
     {
-        $freelancer = Freelancer::find($request->freelancer->id);
+        if (!session('LoggedFreelancer')) {
+            return redirect()->route('freelancers.loginForm');
+        }
+        $freelancer = Freelancer::find(session('LoggedFreelancer'));
         return view("freelancer.dashboard", ["freelancer" => $freelancer]);
     }
 

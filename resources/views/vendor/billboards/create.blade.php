@@ -154,7 +154,7 @@
                                                 <label class="form-label">Location</label>
                                                 <div class="input-group input-group--append">
                                                     <select class="input js-input-select input--fluid select2-hidden-accessible" data-placeholder="" tabindex="-1" aria-hidden="true" name="category">
-                                                        <option value="Select a location" selected disabled>Select a Location</option>
+                                                        <option value="" selected disabled>Select a Location</option>
                                                         @foreach ($categories as $category)
                                                             <option value="{{ $category['id'] }}" >{{ $category['name'] }}</option>
                                                         @endforeach
