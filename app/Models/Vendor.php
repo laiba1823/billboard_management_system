@@ -21,8 +21,13 @@ class Vendor extends Model
         'password'
     ];
 
+    public function billboards()
+    {
+        return $this->hasMany(Billboard::class);
+    }
+
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasManyThrough(Order::class, Billboard::class);
     }
 }

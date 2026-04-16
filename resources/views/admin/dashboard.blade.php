@@ -177,7 +177,7 @@
                                             Total amount at the moment
                                         </div>
                                         <div class="card-widget__trade">
-                                            <span class="card-widget__count">${{$currentAmount}}</span>
+                                            <span class="card-widget__count">Rs {{ $currentAmount }}</span>
                                         </div>
                                     </div>
 
@@ -270,7 +270,7 @@
                                                                     <span class="text-grey">{{ \Carbon\Carbon::parse($lastTransaction->created_at)->format('d-m-Y h:i:s A') }} </span>
                                                                 </td>
                                                                 <td class="table__td">
-                                                                    <span>${{ $lastTransaction->amount }}</span>
+                                                                    <span>Rs {{ $lastTransaction->amount }}</span>
                                                                 </td>
                                                                 <td class="table__td">
                                                                     <span class="text-grey">
@@ -348,7 +348,7 @@
                                                                 <span class="text-grey">17.07.2018</span>
                                                             </td>
                                                             <td class="table__td">
-                                                                <span>$800</span>
+                                                                <span>Rs 800</span>
                                                             </td>
                                                             <td class="table__td">
                                                                 <span class="text-grey">
@@ -412,7 +412,7 @@
                                                                 <span class="text-grey">25.07.2018</span>
                                                             </td>
                                                             <td class="table__td">
-                                                                <span>$3,000</span>
+                                                                <span>Rs 3,000</span>
                                                             </td>
                                                             <td class="table__td">
                                                                 <span class="text-grey">

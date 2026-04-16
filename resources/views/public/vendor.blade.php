@@ -47,7 +47,7 @@
 									<div class="wt-proposalhead wt-userdetails">
 										<h2>{{ $vendor->name }}</h2>
 										<ul class="wt-userlisting-breadcrumb wt-userlisting-breadcrumbvtwo">
-											{{-- <li><span><i class="far fa-money-bill-alt"></i> $44.00 / hr</span></li> --}}
+												{{-- <li><span><i class="far fa-money-bill-alt"></i> Rs 44.00 / hr</span></li> --}}
 											<li><span><img src="{{asset("images/flag/img-02.png")}}" alt="img description">  United States</span></li>
 											<li><a href="javascript:void(0);" class="wt-clicksave"><i class="fa fa-heart"></i> Loved by us</a></li>
 										</ul>

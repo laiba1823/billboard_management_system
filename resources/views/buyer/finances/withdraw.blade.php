@@ -85,7 +85,7 @@
                                                             Total amount at the moment
                                                         </div>
                                                         <div class="card-widget__trade">
-                                                            <span class="card-widget__count">${{$currentAmount}}</span>
+                                                            <span class="card-widget__count">Rs {{ $currentAmount }}</span>
                                                         </div>
                                                     </div>
                 

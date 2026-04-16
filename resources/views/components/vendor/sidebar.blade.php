@@ -126,6 +126,14 @@
                         </div>
 
                     </li> 
+                    <li class="sidebar__menu-item">
+                        <a class="sidebar__link" href="{{ route('vendors.orders.index') }}">
+                            <span class="sidebar__link-icon">
+                                <i class="fa-solid fa-list"></i>
+                            </span>
+                            <span class="sidebar__link-text">Orders</span>
+                        </a>
+                    </li>
 
                 </ul>
             </nav>

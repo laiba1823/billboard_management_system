@@ -41,7 +41,7 @@ class FreelancerController extends Controller
 
         if ($freelancer && password_verify($password, $freelancer->password)) {
             session()->put(["LoggedFreelancer" => $freelancer->id]);
-            return redirect()->route("freelancers.dashboard");
+            return redirect()->intended(route("freelancers.dashboard"));
         } else {
             return redirect()->back()->with("fail", "Invalid credentials");
         }

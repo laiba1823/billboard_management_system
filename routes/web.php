@@ -5,10 +5,13 @@ use App\Http\Controllers\BankAccountsController;
 use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\VendorOrdersController;
 use App\Http\Controllers\BillboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,7 +38,7 @@ Route::middleware(["PassBuyerData"])->group(function() {
     Route::get('/billboards', [PublicController::class, "search"])->name("public.search");
     Route::get('/{id}/billboard', [BillboardController::class, "show"])->name("public.billboard.show");
     Route::get('/{id}/vendor', [VendorController::class, "show"])->name("public.vendor.show");
-    Route::get('/{id}/buyer', [VendorController::class, "show"])->name("public.buyer.show");
+    Route::get('/{id}/buyer', [BuyerController::class, "show"])->name("public.buyer.show");
     Route::get('/team', [PublicController::class, "team"])->name("public.team");
 });
 
@@ -96,6 +99,11 @@ Route::prefix("vendors")->group(function(){
 
         Route::prefix("bank-account")->group(function(){
             Route::put("/{id}/update", [BankAccountsController::class, 'updateVendor'])->name("vendors.bank_account.update");
+        });
+
+        Route::prefix("orders")->group(function(){
+            Route::get('/', [VendorOrdersController::class, 'index'])->name('vendors.orders.index');
+            Route::post('/{id}/status', [VendorOrdersController::class, 'updateStatus'])->name('vendors.orders.updateStatus');
         });
     });
 });
@@ -160,6 +168,21 @@ Route::prefix("buyers")->group(function(){
         });
     });
 });
+
+
+// -------------------
+// PAYMENT ROUTE (PROTECTED FOR BUYERS)
+// -------------------
+Route::middleware(["AuthCheckBuyer"])->group(function(){
+    Route::get('/pay/{order}', [PaymentController::class, 'showPaymentForm'])->name('payment.form');
+    Route::post('/pay/{order}', [PaymentController::class, 'makePayment'])->name('payment.make');
+});
+
+
+// -------------------
+// NOTIFICATION ROUTES
+// -------------------
+Route::get('/notifications/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 
 
 // -------------------

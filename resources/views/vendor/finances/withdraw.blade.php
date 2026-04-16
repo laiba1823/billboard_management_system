@@ -85,7 +85,7 @@
                                                             Total amount at the moment
                                                         </div>
                                                         <div class="card-widget__trade">
-                                                            <span class="card-widget__count">${{$currentAmount}}</span>
+                                                            <span class="card-widget__count">Rs {{ $currentAmount }}</span>
                                                         </div>
                                                     </div>
                 
@@ -106,11 +106,11 @@
 
                                         <li class="card-list__item">
                                             <div class="card-list__title">Account Holder</div>
-                                            <div class="card-list__value">{{$bankAccount->card_holder}}</div>
+                                            <div class="card-list__value">{{ $bankAccount?->card_holder ?? 'Not available' }}</div>
                                         </li>
                                         <li class="card-list__item">
                                             <div class="card-list__title">Account Number</div>
-                                            <div class="card-list__value">{{$bankAccount->account_number}}2</div>
+                                            <div class="card-list__value">{{ $bankAccount?->account_number ?? 'Not available' }}</div>
                                         </li>
                                         
                                         <li class="card-list__item">

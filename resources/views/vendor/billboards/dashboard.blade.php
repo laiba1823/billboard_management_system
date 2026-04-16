@@ -133,7 +133,7 @@
                                         </div>
                                     </div>
                                     <div class="product-cart__column">
-                                        <div class="product-cart__price">${{ $billboard->price }}</div>
+                                        <div class="product-cart__price">Rs {{ $billboard->price }}</div>
                                     </div>
                                     <div class="product-cart__column">
                                         <button class="product-cart__remove" >

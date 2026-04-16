@@ -175,7 +175,7 @@
                                             <label class="form-label">Price</label>
                                             <div class="input-group input-group--prepend">
                                                 <div class="input-group__prepend"><span
-                                                        class="input-group__symbol">$</span>
+                                                        class="input-group__symbol">Rs&nbsp;</span>
                                                 </div>
                                                 <input class="input" type="number" min="10" max="99999" placeholder="" value="{{ $billboard->price }}" required="" name="price">
                                             </div>

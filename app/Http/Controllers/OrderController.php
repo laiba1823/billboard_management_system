@@ -45,7 +45,7 @@ class OrderController extends Controller
             'time' => 'required|integer',
         ]);
 
-        $validatedData['status'] = 'pending';
+        $validatedData['status'] = Order::STATUS_PENDING;
         $validatedData['number'] = rand(10000000, 99999999);
 
         Order::create($validatedData);
@@ -88,13 +88,11 @@ class OrderController extends Controller
 
     public function updateStatus(Order $order, $newStatus)
     {
-        // Validate the new status (optional, depending on your needs)
-        $allowedStatuses = ['cancelled', 'completed', 'pending'];
+        $allowedStatuses = Order::statuses();
         if (!in_array($newStatus, $allowedStatuses)) {
             return response()->json(['error' => 'Invalid status'], 400);
         }
 
-        // Update the status
         $order->update(['status' => $newStatus]);
 
         return response()->json(['message' => 'Status updated successfully']);

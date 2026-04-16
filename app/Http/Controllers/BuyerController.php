@@ -12,6 +12,7 @@ use App\Models\Transactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Notification;
 
 class BuyerController extends Controller
 {
@@ -76,7 +77,7 @@ class BuyerController extends Controller
             if (password_verify($password, $buyer->password)) {
                 // Password is correct, create a session and return the user ID
                 session()->put(["LoggedBuyer" => $buyer->id]);
-                return redirect()->route("buyers.dashboard");
+                return redirect()->intended(route("buyers.dashboard"));
             } else {
                 // Password is incorrect
                 return redirect()->back()->with("fail", "Password is not correct");
@@ -102,12 +103,20 @@ class BuyerController extends Controller
         $cancelledOrderCount = Order::where("buyer_id", $buyer->id)->where("status", "cancelled")->get()->count();
         $pendingOrderCount = Order::where("buyer_id", $buyer->id)->where("status", "pending")->get()->count();
         
+        // Fetch latest notifications (unread first)
+        $notifications = Notification::where('user_id', $buyer->id)
+            ->orderBy('is_read', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get();
+        
         return view("buyer.dashboard", [
             "buyer" => $buyer,
             "orderCount" => $orderCount,
             "currentAmount" => $currentAmount,
             "cancelledOrderCount" => $cancelledOrderCount,
             "pendingOrderCount" => $pendingOrderCount,
+            "notifications" => $notifications,
         ]);
     }
 
@@ -126,9 +135,11 @@ class BuyerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Buyer $buyer)
+    public function show($id)
     {
-        //
+        $buyer = Buyer::findOrFail($id);
+        $categories = Category::all();
+        return view('public.buyer', compact('buyer', 'categories'));
     }
 
     /**

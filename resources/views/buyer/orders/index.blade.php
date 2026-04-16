@@ -127,7 +127,7 @@
                                                         <td class="d-none d-sm-table-cell table__td"><span
                                                                 class="text-grey">{{ $order->time }} Month</span>
                                                         </td>
-                                                        <td class="table__td"><span>${{ $order->amount }}</span>
+                                                        <td class="table__td"><span>Rs {{ $order->amount }}</span>
                                                         </td>
                                                         <td class="table__td text-nowrap">
                                                             <span
@@ -139,14 +139,20 @@
                                                                 @if ($order->status == 'completed')
                                                                     <span class="table__status-icon color-green"></span>
                                                                     Completed
-                                                                @endif
-                                                                @if ($order->status == 'cancelled')
+                                                                @elseif ($order->status == 'cancelled')
                                                                     <span class="table__status-icon color-red"></span>
                                                                     Cancelled
-                                                                @endif
-                                                                @if ($order->status == 'pending')
+                                                                @elseif ($order->status == 'accepted')
+                                                                    <span class="table__status-icon color-orange"></span>
+                                                                    Accepted
+                                                                @elseif ($order->status == 'paid')
+                                                                    <span class="table__status-icon color-purple"></span>
+                                                                    Paid
+                                                                @elseif ($order->status == 'pending')
                                                                     <span class="table__status-icon color-blue"></span>
                                                                     Pending
+                                                                @else
+                                                                    {{ ucfirst($order->status) }}
                                                                 @endif
                                                             </div>
                                                         </td>
@@ -188,6 +194,7 @@
                                                                                             </use>
                                                                                         </svg></span>View Vendor</a>
                                                                             </li>
+                                                                            @if ($order->status == 'pending')
                                                                             <li class="dropdown-items__item">
                                                                                 <button onclick="updateStatus({{ $order->id }}, 'cancelled')" class="dropdown-items__link">
                                                                                     <span class="dropdown-items__link-icon">
@@ -196,22 +203,16 @@
                                                                                     Cancel
                                                                                 </button>
                                                                             </li>
+                                                                            @elseif ($order->status == 'accepted' && $order->payment_status == 'unpaid')
                                                                             <li class="dropdown-items__item">
-                                                                                <button onclick="updateStatus({{ $order->id }}, 'completed')" class="dropdown-items__link">
+                                                                                <button onclick="makePayment({{ $order->id }})" class="dropdown-items__link">
                                                                                     <span class="dropdown-items__link-icon">
-                                                                                        <i class="fa-solid fa-check"></i>
+                                                                                        <i class="fa-solid fa-credit-card"></i>
                                                                                     </span>
-                                                                                    Complete
+                                                                                    Pay
                                                                                 </button>
                                                                             </li>
-                                                                            <li class="dropdown-items__item">
-                                                                                <button onclick="updateStatus({{ $order->id }}, 'pending')" class="dropdown-items__link">
-                                                                                    <span class="dropdown-items__link-icon">
-                                                                                        <i class="fa-solid fa-clock-rotate-left"></i>
-                                                                                    </span>
-                                                                                    Pending
-                                                                                </button>
-                                                                            </li>
+                                                                            @endif
                                                                         </ul>
                                                                     </div>
                                                                 </div>
@@ -291,6 +292,11 @@
                     alert(error.response.data.error);
                     console.log(error.response.data.error);
                 });
+        }
+
+        function makePayment(orderId) {
+            // Redirect to payment form
+            window.location.href = `/pay/${orderId}`;
         }
     </script>
 @endsection

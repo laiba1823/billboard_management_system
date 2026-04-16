@@ -123,7 +123,7 @@
                                         </div> --}}
                                         <ul class="card-order__list">
                                             <li><b>Order #:</b> {{$order->number}}</li>
-                                            <li><b>Amount:</b> ${{$order->amount}}</li>
+                                            <li><b>Amount:</b> Rs {{ $order->amount }}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -310,7 +310,7 @@
                                                         <td class="table__td text-center text-dark-theme">
                                                             <div class="d-inline-block">
                                                                 <div class="input-group input-group--prepend-xs">
-                                                                    <div class="input-group__prepend">$</div>
+                                                                    <div class="input-group__prepend">Rs</div>
                                                                     <div class="input input--edit" contenteditable="true">
                                                                         2500</div>
                                                                 </div>
@@ -321,7 +321,7 @@
                                                                 type="number" value="10" min="0"
                                                                 max="999">
                                                         </td>
-                                                        <td class="table__td text-nowrap text-dark-theme">$25,000</td>
+                                                            <td class="table__td text-nowrap text-dark-theme">Rs 25,000</td>
                                                         <td class="table__td table__actions text-dark-theme">
                                                             <button class="table__remove" type="button">
                                                                 <svg class="icon-icon-trash">
@@ -339,7 +339,7 @@
                                                         <td class="table__td text-center text-dark-theme">
                                                             <div class="d-inline-block">
                                                                 <div class="input-group input-group--prepend-xs">
-                                                                    <div class="input-group__prepend">$</div>
+                                                                    <div class="input-group__prepend">Rs</div>
                                                                     <div class="input input--edit" contenteditable="true">
                                                                         2500</div>
                                                                 </div>
@@ -350,7 +350,7 @@
                                                                 type="number" value="10" min="0"
                                                                 max="999">
                                                         </td>
-                                                        <td class="table__td text-nowrap text-dark-theme">$25,000</td>
+                                                        <td class="table__td text-nowrap text-dark-theme">Rs 25,000</td>
                                                         <td class="table__td table__actions text-dark-theme">
                                                             <button class="table__remove" type="button">
                                                                 <svg class="icon-icon-trash">
@@ -368,7 +368,7 @@
                                                         <td class="table__td text-center text-dark-theme">
                                                             <div class="d-inline-block">
                                                                 <div class="input-group input-group--prepend-xs">
-                                                                    <div class="input-group__prepend">$</div>
+                                                                    <div class="input-group__prepend">Rs</div>
                                                                     <div class="input input--edit" contenteditable="true">
                                                                         2500</div>
                                                                 </div>
@@ -379,7 +379,7 @@
                                                                 type="number" value="10" min="0"
                                                                 max="999">
                                                         </td>
-                                                        <td class="table__td text-nowrap text-dark-theme">$25,000</td>
+                                                        <td class="table__td text-nowrap text-dark-theme">Rs 25,000</td>
                                                         <td class="table__td table__actions text-dark-theme">
                                                             <button class="table__remove" type="button">
                                                                 <svg class="icon-icon-trash">
@@ -417,11 +417,11 @@
                                     <ul class="card-order__total">
                                         <li class="card-order__total-item">
                                             <div class="card-order__total-title">Subtotal:</div>
-                                            <div class="card-order__total-value">$75,000</div>
+                                            <div class="card-order__total-value">Rs 75,000</div>
                                         </li>
                                         <li class="card-order__total-item">
                                             <div class="card-order__total-title">TAX(20%):</div>
-                                            <div class="card-order__total-value">$90,000</div>
+                                            <div class="card-order__total-value">Rs 90,000</div>
                                         </li>
                                         <li class="card-order__total-item">
                                             <div class="card-order__total-title">DISCOUNT:</div>
@@ -429,7 +429,7 @@
                                         </li>
                                         <li class="card-order__total-item card-order__total-footer">
                                             <div class="card-order__total-title">total:</div>
-                                            <div class="card-order__total-value">$81,000</div>
+                                            <div class="card-order__total-value">Rs 81,000</div>
                                         </li>
                                     </ul>
                                 </div>
@@ -442,3 +442,4 @@
     </main>
 
 @endsection
+

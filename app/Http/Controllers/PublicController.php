@@ -41,7 +41,7 @@ class PublicController extends Controller
             $dbQuery->where('location', $location);
         }
 
-        $gigs = $dbQuery->get();
+        $gigs = $dbQuery->with(['vendor', 'category'])->get();
 
         return view('public.search', [
             'gigs' => $gigs,

@@ -15,6 +15,7 @@ class Transactions extends Model
         'to',
         'amount',
         'status',
+        'order_id',
     ];
 
     public function company()

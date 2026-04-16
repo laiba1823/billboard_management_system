@@ -67,7 +67,7 @@ class AdminController extends Controller
             if (password_verify($password, $admin->password)) {
                 // Password is correct, create a session and return the user ID
                 session()->put(["LoggedAdmin" => $admin->id]);
-                return redirect()->route("admin.dashboard");
+                return redirect()->intended(route("admin.dashboard"));
             } else {
                 // Password is incorrect
                 return redirect()->back()->with("fail", "Password is not correct");

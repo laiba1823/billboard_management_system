@@ -16,6 +16,7 @@ class Buyer extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'img',
+        'address',
     ];
 
     protected $hidden = [

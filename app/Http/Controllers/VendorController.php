@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Notification;
 
 class VendorController extends Controller
 {
@@ -25,9 +26,16 @@ class VendorController extends Controller
         $bankAccount = BankAccounts::where('user_type', 'vendor')->where('user_id', $vendor->id)->first();
         $currentAmount = $bankAccount ? $bankAccount->current_balance : 0;
 
-        $orderCount = $vendor->orders->count(); 
-        $cancelledOrderCount = Order::where("buyer_id", $vendor->id)->where("status", "cancelled")->get()->count();
-        $pendingOrderCount = Order::where("buyer_id", $vendor->id)->where("status", "pending")->get()->count();
+        $orderCount = $vendor->orders()->count(); 
+        $cancelledOrderCount = $vendor->orders()->where("orders.status", "cancelled")->count();
+        $pendingOrderCount = $vendor->orders()->where("orders.status", "pending")->count();
+
+        // Fetch latest notifications (unread first)
+        $notifications = Notification::where('user_id', $vendor->id)
+            ->orderBy('is_read', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get();
 
         return view("vendor.dashboard", [
             "vendor" => $vendor,
@@ -35,6 +43,7 @@ class VendorController extends Controller
             "currentAmount" => $currentAmount,
             "cancelledOrderCount" => $cancelledOrderCount,
             "pendingOrderCount" => $pendingOrderCount,
+            "notifications" => $notifications,
         ]);
     }
 
@@ -78,7 +87,7 @@ class VendorController extends Controller
             if (password_verify($password, $vendor->password)) {
                 // Password is correct, create a session and return the user ID
                 session()->put(["LoggedVendor" => $vendor->id]);
-                return redirect()->route("vendors.dashboard");
+                return redirect()->intended(route("vendors.dashboard"));
             } else {
                 // Password is incorrect
                 return redirect()->back()->with("fail", "Password is not correct");

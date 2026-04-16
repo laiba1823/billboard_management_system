@@ -58,6 +58,26 @@
 
             </div>
 
+            {{-- Notifications Section --}}
+            @if($notifications->count() > 0)
+                <div class="notifications-section" style="margin-bottom: 20px;">
+                    <h3 style="margin-bottom: 10px;">Latest Notifications</h3>
+                    @foreach($notifications as $notification)
+                        <div style="padding: 10px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 4px; background-color: {{ $notification->is_read ? '#f9f9f9' : '#e8f4f8' }};">
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div>
+                                    <p style="margin: 0; {{ !$notification->is_read ? 'font-weight: bold;' : '' }}">{{ $notification->message }}</p>
+                                    <small style="color: #999;">{{ $notification->created_at->diffForHumans() }}</small>
+                                </div>
+                                @if(!$notification->is_read)
+                                    <a href="{{ route('notifications.markAsRead', $notification->id) }}" style="margin-left: 10px; color: #007bff; text-decoration: none; font-size: 12px;">Mark Read</a>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
             <div class="widgets">
                 <div class="widgets__row row gutter-bottom-xl">
 
@@ -209,7 +229,7 @@
                                             Total amount at the moment
                                         </div>
                                         <div class="card-widget__trade">
-                                            <span class="card-widget__count">${{$currentAmount}}</span>
+                                            <span class="card-widget__count">Rs {{ $currentAmount }}</span>
                                         </div>
                                     </div>
 
@@ -301,7 +321,7 @@
                                                                     <span class="text-grey">{{ \Carbon\Carbon::parse($lastTransaction->created_at)->format('d-m-Y h:i:s A') }} </span>
                                                                 </td>
                                                                 <td class="table__td">
-                                                                    <span>${{ $lastTransaction->amount }}</span>
+                                                                    <span>Rs {{ $lastTransaction->amount }}</span>
                                                                 </td>
                                                                 <td class="table__td">
                                                                     <span class="text-grey">

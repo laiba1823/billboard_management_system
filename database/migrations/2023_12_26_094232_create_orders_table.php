@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('amount', 10);
             $table->text("description");
             $table->integer('time');
-            $table->enum('status', ['completed', 'pending', 'cancelled']);
+            $table->enum('status', ['pending', 'accepted', 'paid', 'completed', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

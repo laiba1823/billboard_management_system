@@ -177,7 +177,7 @@
                                             Total amount at the moment
                                         </div>
                                         <div class="card-widget__trade">
-                                            <span class="card-widget__count">${{$currentBalance}}</span>
+                                            <span class="card-widget__count">Rs {{ $currentBalance }}</span>
                                         </div>
                                     </div>
 
@@ -299,7 +299,7 @@
                                                                     <span class="text-grey">{{ \Carbon\Carbon::parse($lastTransaction->created_at)->format('d-m-Y h:i:s A') }} </span>
                                                                 </td>
                                                                 <td class="table__td">
-                                                                    <span>${{ $lastTransaction->amount }}</span>
+                                                                    <span>Rs {{ $lastTransaction->amount }}</span>
                                                                 </td>
                                                                 <td class="table__td">
                                                                     <span class="text-grey">

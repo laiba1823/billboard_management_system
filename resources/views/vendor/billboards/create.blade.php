@@ -53,7 +53,7 @@
             <div class="card add-product card--content-center">
                 <div class="card__wrapper">
                         <div class="card__container">
-                            <form class="add-product__form" method="POST" action="{{ route("vendors.billboards.store") }}" id="myForm" enctype="multipart/form-data">
+<form class="add-product__form" method="POST" action="{{ route('vendors.billboards.store') }}" id="myForm" enctype="multipart/form-data" onsubmit="return submitForm()">
                                 @csrf
                                 <input type="hidden" name="vendor_id" value="{{ $vendor->id }}">
                                 <div class="add-product__row">
@@ -123,7 +123,7 @@
                                             <div class="col-12 form-group form-group--lg">
                                                 <label class="form-label">Title</label>
                                                 <div class="input-group">
-                                                    <input class="input" type="text" placeholder="Billboard Title" name="title" value="" required="">
+                                                    <input class="input" type="text" placeholder="Billboard Title" name="title" value="{{ old('title') }}" required="">
                                                 </div>
                                                 <br>
                                                 <span class="text-danger">@error('title'){{$message}}@enderror</span>
@@ -153,14 +153,14 @@
                                             <div class="col-12 form-group form-group--lg">
                                                 <label class="form-label">Location</label>
                                                 <div class="input-group input-group--append">
-                                                    <select class="input js-input-select input--fluid select2-hidden-accessible" data-placeholder="" tabindex="-1" aria-hidden="true" name="category">
+                                                    <select class="input js-input-select input--fluid" data-placeholder="" name="category">
                                                         <option value="" selected disabled>Select a Location</option>
                                                         @foreach ($categories as $category)
-                                                            <option value="{{ $category['id'] }}" >{{ $category['name'] }}</option>
+                                                            <option value="{{ $category['id'] }}" @if(old('category') == $category['id']) selected @endif>{{ $category['name'] }}</option>
                                                         @endforeach
                                                     </select>
                                                     <br>
-                                                    <span class="text-danger">@error('category_id'){{$message}}@enderror</span>
+                                                    <span class="text-danger">@error('category'){{$message}}@enderror</span>
 
                                                     {{-- <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 442.094px;">
                                                         <span class="selection">
@@ -187,9 +187,9 @@
                                                 <label class="form-label">Price</label>
                                                 <div class="input-group input-group--prepend">
                                                     <div class="input-group__prepend"><span
-                                                            class="input-group__symbol">$</span>
+                                                            class="input-group__symbol">PKR&nbsp;</span>
                                                     </div>
-                                                    <input class="input" type="number" min="10" max="99999" placeholder="" value="" required="" name="price">
+                                                    <input class="input" type="number" min="10" max="99999" placeholder="" value="{{ old('price') }}" required="" name="price">
                                                 </div>
                                                 <br>
                                                 <span class="text-danger">@error('price'){{$message}}@enderror</span>
@@ -197,10 +197,10 @@
 
                                         </div>
                                         <div class="add-product__submit" style="justify-content: start;">
-                                            <button type="button" class="button button--primary button--block" onclick="submitForm()">
+                                            <button type="submit" class="button button--primary button--block">
                                                 Create
                                             </button>
-                                            <a href="{{ route("vendors.billboards.index") }}" type="button" class="button button--primary button--block" onclick="submitForm()">
+                                            <a href="{{ route('vendors.billboards.index') }}" class="button button--primary button--block">
                                                 Cancel
                                             </a>
                                             {{-- <div class="modal__footer-button">
@@ -260,8 +260,8 @@
             document.getElementById('descriptionInput').value = quillHtml;
             console.log(document.getElementById('descriptionInput').value)
 
-            // Submit the form
-            document.getElementById('myForm').submit();
+            // Submit the form if not already handled by the browser
+            return true
         }
     </script>
     

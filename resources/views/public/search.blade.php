@@ -410,7 +410,7 @@
 											<div class="wt-userlistingcontent">
 												<div class="wt-contenthead">
 													<div class="wt-title">
-														<a href="{{ route('public.vendor.show', ['id' => $gig->vendor->id]) }}"><i class="fa fa-check-circle"></i> {{ $gig->vendor->name}}</a>
+														<a href="{{ $gig->vendor ? route('public.vendor.show', ['id' => $gig->vendor->id]) : 'javascript:void(0);' }}"><i class="fa fa-check-circle"></i> {{ optional($gig->vendor)->name ?? 'Unknown Vendor' }}</a>
 														<h2>{{ $gig->title}}</h2>
 													</div>
 													<div class="wt-description">
@@ -426,9 +426,9 @@
 													<ul>
 														<li><span><i class="fa fa-dollar-sign wt-viewjobdollar"></i>Professional</span></li>
 														{{-- <li><span><em><img src="images/flag/img-01.png" alt="img description"></em>United Emirates</span></li> --}}
-														<li><span><i class="far fa-folder wt-viewjobfolder"></i> {{ $gig->category->name}}</span></li>
+														<li><span><i class="far fa-folder wt-viewjobfolder"></i> {{ optional($gig->category)->name ?? 'No category' }}</span></li>
 														
-														<li><span><i class="fa-solid fa-money-bill"></i>{{ $gig->last_bid == null ? "Starting Price: " : "Last Bid: "}}: ${{ $gig->last_bid == null ? $gig->price : $gig->last_bid}}</span></li>
+														<li><span><i class="fa-solid fa-money-bill"></i>{{ $gig->last_bid == null ? "Starting Price: " : "Last Bid: "}}: Rs {{ $gig->last_bid == null ? $gig->price : $gig->last_bid}}</span></li>
 														{{-- <li><span><i class="far fa-clock wt-viewjobclock"></i>Duration: 03 Months</span></li> --}}
 														{{-- <li><span><i class="fa fa-tag wt-viewjobtag"></i>Gig UUID: {{ $gig->uuid}}</span></li> --}}
 														{{-- <li><a href="javascript:void(0);" class="wt-clicklike"><i class="fa fa-heart"></i> Click to Save</a></li> --}}
